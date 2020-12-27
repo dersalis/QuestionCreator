@@ -11,6 +11,42 @@ namespace QuestionCreator.Api.Controllers
     [Route("api/[controller]")]
     public class QuizController: Controller
     {
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var v = new QuizViewModel()
+            {
+                Id = id,
+                Title = String.Format("Przykładowy quiz o identyfikatorze {0}", id),
+                Description = "To nie jest prawdziwy quiz - to tylko przykład!",
+                CreatedDate = DateTime.Now,
+                LastModifiedDate = DateTime.Now
+            };
+            // Przekaż wyniki w formacie JSON
+            return new JsonResult(v, new JsonSerializerSettings(){Formatting = Formatting.Indented});
+        }
+
+        [HttpPut]
+        public IActionResult Put(QuizViewModel model)
+        {
+            return Content("Jeszcze nie zaimplementowane!");
+        }
+
+
+        [HttpPost]
+        public IActionResult Post(QuizViewModel model)
+        {
+            return Content("Jeszcze nie zaimplementowane!");
+        }
+
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            return Content("Jeszcze nie zaimplementowane!");
+        }
+
+
         [HttpGet("Latest/{num:int?}")]
         public IActionResult Latest(int num = 10)
         {
