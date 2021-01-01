@@ -30,6 +30,9 @@ namespace QuestionCreator.Api
             // TODO: Dodać pakiet: Microsoft.AspNetCore.Mvc.NewtonsoftJson
             services.AddControllers().AddNewtonsoftJson();
 
+            // Cors
+            services.AddCors();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "QuestionCreatorApi", Version = "v1" });
@@ -47,6 +50,9 @@ namespace QuestionCreator.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            // Cors
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseAuthorization();
 

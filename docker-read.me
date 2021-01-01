@@ -1,0 +1,14 @@
+## Ikon.Api - z folderu projektu
+
+# Budowa i uruchomienie:
+#docker build -f dockerfile.api -t sheldon.api_0.38 .
+
+docker build -t questioncreator.api_0.4.18 .
+docker run  --name questioncreator.api -d -p 8088:80 id_obrazu
+
+
+## Ikon.Web - z folderu projektu
+
+# Budowa i uruchomienie:
+docker build -t questioncreator.web_0.2.13 .
+docker run  --name questioncreator.web -d -p 8089:80 id_obrazu
