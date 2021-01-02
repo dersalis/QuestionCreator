@@ -1,3 +1,16 @@
 <h1>Witaj, nieznajomy!</h1>
 <p>Oto co otrzymasz, bawiąc się rozwiązaniami .NET Core i Angular</p>
-<app-quiz-list></app-quiz-list>
+
+<div class="row">
+  <div class="col-md-4">
+    <app-quiz-list listtype="latest"></app-quiz-list>
+  </div>
+  <div class="col-md-4">
+    <app-quiz-list listtype="byTitle"></app-quiz-list>
+  </div>
+  <div class="col-md-4">
+    <app-quiz-list listtype="random"></app-quiz-list>
+  </div>
+</div>
+
+

@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { IQuiz } from 'src/app/models/iquz';
+import { IQuiz } from './../../models/iquz';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quiz-list',
@@ -8,16 +9,41 @@ import { HttpClient } from '@angular/common/http'
   styleUrls: ['./quiz-list.component.scss']
 })
 export class QuizListComponent implements OnInit {
-  title: string = "";
-  selectedQuiz: IQuiz = <IQuiz>{};
-  quizzes: IQuiz[] = [];
+  @Input('listtype') listtype: string = '';
+  public title: string = "";
+  public selectedQuiz: IQuiz = <IQuiz>{};
+  public quizzes: IQuiz[] = [];
 
   constructor(
-    private http: HttpClient
-  ) {
-    this.title = "Najnowsze quizy";
+    private http: HttpClient,
+    private router: Router
+  ) {}
+
+  public onSelect(quiz: IQuiz): void {
+    this.selectedQuiz = quiz;
+    console.log("Wybrano quiz o id: " + this.selectedQuiz.Id);
+    this.router.navigate(['quiz', this.selectedQuiz.Id]);
+  }
+
+  ngOnInit(): void {
     var url = "http://localhost:8088/api/Quiz/Latest";
-    http.get<IQuiz[]>(url).subscribe(
+    switch (this.listtype) {
+      case 'latest':
+        this.title = "Najnowsze quizy";
+        url = "http://localhost:8088/api/Quiz/Latest";
+        break;
+      case 'byTitle':
+        this.title = "Quizy alfabetycznie";
+        url = "http://localhost:8088/api/Quiz/ByTitle";
+        break;
+      case 'random':
+        this.title = "Losowe quizy";
+        url = "http://localhost:8088/api/Quiz/Random";
+        break;
+    }
+
+
+    this.http.get<IQuiz[]>(url).subscribe(
       result => {
         this.quizzes = result;
         console.log(this.quizzes);
@@ -26,14 +52,6 @@ export class QuizListComponent implements OnInit {
         console.error(error);
       }
     );
-  }
-
-  public onSelect(quiz: IQuiz): void {
-    this.selectedQuiz = quiz;
-    console.log("Wybrano quiz o id: " + this.selectedQuiz.Id);
-  }
-
-  ngOnInit(): void {
   }
 
 }
